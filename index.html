@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c2940">
+<meta name="description" content="Ôn từ vựng JLPT N1 từ 4 cuốn sách: nghĩa Việt–Anh, giải thích, câu ví dụ và đề luyện theo đúng 4 dạng câu hỏi từ vựng của kỳ thi N1.">
+<title>JLPT N1 Vocabulary Studio</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><div class="brand-icon" aria-hidden="true">日</div><div class="brand">JLPT N1 Vocabulary Studio<small>日本語能力試験 N1 · 語彙</small></div><div class="top-spacer"></div><button id="lang-toggle" class="lang-toggle" title="Change language" aria-label="Change language"><span>🌐</span><span class="lang-current" id="lang-current">VI</span><span id="lang-other">EN</span></button></div></header>
+<section class="hero"><div class="hero-inner"><div class="eyebrow">JLPT N1 · 4 BOOKS · VI / EN</div><h1 data-i18n="heroTitle">Học từ vựng N1 và luyện đề theo đúng cấu trúc kỳ thi</h1><p data-i18n="heroSub"></p><div class="stat-grid"><div class="stat"><b id="stat-total">—</b><span data-i18n="statAll"></span></div><div class="stat"><b id="stat-lessons">—</b><span data-i18n="statLessons"></span></div><div class="stat"><b id="stat-books">4</b><span data-i18n="statBooks"></span></div><div class="stat"><b id="stat-questions">—</b><span data-i18n="statQuestions"></span></div></div></div></section>
+<main>
+<nav class="nav" aria-label="Site navigation"><button class="active" id="tab-study" data-i18n="tabStudy"></button><button id="tab-quiz" data-i18n="tabQuiz"></button><button id="tab-review" data-i18n="tabReview"></button></nav>
+<div id="loading" class="panel loading" data-i18n="loading">Đang tải dữ liệu…</div>
+
+<section id="panel-study" class="panel hidden"><h2 data-i18n="studyTitle"></h2><p class="sub" data-i18n="studyIntro"></p>
+<div class="toolbar four"><div class="field"><label for="study-book" data-i18n="labelBook"></label><select id="study-book"></select></div><div class="field"><label for="study-lesson" data-i18n="labelLesson"></label><select id="study-lesson"></select></div><div class="field"><label for="study-pos" data-i18n="labelPos"></label><select id="study-pos"></select></div><div class="field"><label for="study-star" data-i18n="labelStar"></label><select id="study-star"></select></div><div class="field search-field"><label for="study-search" data-i18n="labelSearch"></label><input id="study-search" autocomplete="off" inputmode="search"></div></div>
+<div class="toolbar-actions"><div class="minor" id="study-count"></div><button class="btn" id="show-more" data-i18n="loadMore"></button></div><div class="word-grid" id="word-list"></div></section>
+
+<section id="panel-quiz" class="panel hidden"><h2 data-i18n="quizTitle"></h2><p class="sub" data-i18n="quizIntro"></p>
+<div id="quiz-setup"><div class="scope-head"><h3 data-i18n="scopeTitle"></h3><div class="scope-actions"><button type="button" class="btn" id="scope-all" data-i18n="scopeAll"></button><button type="button" class="btn" id="scope-none" data-i18n="scopeNone"></button></div></div><div id="scope-summary" class="scope-summary" aria-live="polite"></div><div id="book-tree" class="scope-grid" role="group" aria-label="Select books and lessons"></div>
+<div class="quiz-setting"><div class="field"><label for="quiz-type" data-i18n="labelQuizType"></label><select id="quiz-type"></select></div><div class="field"><label for="quiz-count" data-i18n="labelQuizCount"></label><select id="quiz-count"></select></div><div class="field"><label for="quiz-style" data-i18n="labelQuizStyle"></label><select id="quiz-style"></select></div><div class="field"><label for="quiz-order" data-i18n="labelOrder"></label><select id="quiz-order"></select></div></div>
+<div class="toolbar-actions"><span id="quiz-available" class="minor"></span><button id="quiz-start" class="btn primary" data-i18n="quizStart"></button></div><p class="quiz-help" data-i18n="quizNote"></p></div>
+<div id="quiz-run" class="quiz-main hidden"><div class="progress-meta"><span id="question-progress"></span><span id="question-score"></span></div><div class="progress"><div id="progress-in" class="progress-in"></div></div><div id="question-kicker" class="question-kicker"></div><div id="question-instruction" class="question-instruction"></div><div id="question-stem" class="question-stem" lang="ja"></div><div id="choices" class="choices"></div><div id="question-feedback" class="feedback hidden"></div><div class="quiz-footer"><button class="btn" id="quiz-exit" data-i18n="quizExit"></button><button class="btn primary hidden" id="quiz-next" data-i18n="quizNext"></button></div></div>
+<div id="quiz-finish" class="quiz-main hidden"><h2 data-i18n="finishTitle"></h2><div class="scoreboard"><div class="stat"><b id="finish-score"></b><span data-i18n="finishCorrect"></span></div><div class="stat"><b id="finish-percent"></b><span data-i18n="finishRate"></span></div><div class="stat"><b id="finish-wrong-count"></b><span data-i18n="finishMissed"></span></div></div><div id="finish-bytype" class="sub"></div><p id="finish-comment" class="sub"></p><div id="finish-review"></div><div class="quiz-footer"><button id="quiz-restart" class="btn primary" data-i18n="retryQuiz"></button><button id="go-review" class="btn" data-i18n="openMistakes"></button></div></div></section>
+
+<section id="panel-review" class="panel hidden"><h2 data-i18n="reviewTitle"></h2><p class="sub" data-i18n="reviewIntro"></p><div class="toolbar-actions"><span class="minor" id="review-count"></span><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="review-retry" data-i18n="reviewRetry"></button><button class="btn" id="export-csv" data-i18n="exportCsv"></button><button class="btn danger" id="clear-review" data-i18n="clearReview"></button></div></div><div id="review-list" class="word-grid"></div></section>
+<div class="footnote"><span data-i18n="footerNote"></span></div>
+</main>
+<script src="assets/app.js" defer></script>
+</body></html>
