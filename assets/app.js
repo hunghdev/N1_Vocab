@@ -65,7 +65,8 @@ function prepare(rows) {
     w.primary = `${w.book}:${w.lesson}`;
     w.pages = {[w.primary]: +r.page || 0};
     for (const x of (r.also_in ? r.also_in.split(';') : [])) { const [b, l, p] = x.trim().split('-'); if (!b || !l) continue; const k = `${b}:${l}`; if (!(k in w.pages)) w.pages[k] = +p || 0; }
-    w.lessons = Object.keys(w.pages);
+    // each word belongs only to the lesson where it first appears, so every lesson contains only new words
+    w.lessons = [w.primary];
     if (r.q_read) { const [ans, rest] = splitLast(r.q_read, '|'); w.qRead = {answer: ans, opts: rest.split(';').map(x => { const [o, k] = splitLast(x, ':'); return {label: o, trap: k}; })}; }
     const pairs = s => s ? s.split(';').map(x => { const [o, id] = splitLast(x, ':'); return {label: o, id}; }) : null;
     w.qCtx = pairs(r.q_context); w.qPara = pairs(r.q_paraphrase);
@@ -125,7 +126,7 @@ function wordCard(w, ctx) {
   if (w.ja_def_pdf) extra.push(`<div class="kv"><b>${T('jaDef')}:</b> <span lang="ja">${esc(w.ja_def_pdf)}</span></div>`);
   if (w.alt_spellings || w.alt_readings) extra.push(`<div class="kv"><b>${T('alt')}:</b> <span lang="ja">${esc([w.alt_spellings, w.alt_readings].filter(Boolean).join('／'))}</span></div>`);
   if (w.notes) extra.push(`<div class="kv"><b>${T('notes')}:</b> ${esc(w.notes)}</div>`);
-  const others = w.lessons.filter(k => k !== ctx);
+  const others = Object.keys(w.pages).filter(k => k !== ctx);
   if (others.length) extra.push(`<div class="kv"><b>${T('alsoIn')}:</b> ${others.map(keyLabel).join(', ')}</div>`);
   const repeat = ctx !== w.primary ? `<div class="repeat-note">↺ ${T('firstSeen')} ${keyLabel(w.primary)}</div>` : '';
   return `<article class="word-card"><div class="word-top"><div><div class="headword" lang="ja">${esc(w.word)}</div><div class="reading" lang="ja">${esc(w.reading)}</div></div><span class="tag">${keyLabel(ctx)}</span></div>${repeat}
